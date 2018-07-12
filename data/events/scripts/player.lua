@@ -94,20 +94,28 @@ function Player:onLook(thing, position, distance)
 		description = description .. thing:getDescription(distance)
 	end
 
-		--[[-- KD look 
-	 if thing:isCreature() and thing:isPlayer() then
-        description = string.format("%s\n [PVP Kills: %d] \n [PVP Deaths: %d] \n",
+-----------------------------------------------------------------------------------------------------------------
+--[[ exhaustion test
+	if player:getExhaustion(321456) <= 0 then
+       		player:setExhaustion(321456, 1)
+	else
+        	return false
+	end]]
+
+	-- KD look 
+	if thing:isCreature() and thing:isPlayer() then
+        	description = string.format("%s\n [PVP Kills: %d] \n [PVP Deaths: %d] \n",
             description, math.max(0, thing:getStorageValue(167912)), math.max(0, thing:getStorageValue(167913)))
-    end
-		end--]]
+    	end
 	
-	--[[-- MARRY 
+	-- MARRY 
 	if LOOK_MARRIAGE_DESCR and thing:isCreature() then
 		if thing:isPlayer() then
 			description = description .. self:getMarriageDescription(thing)
 		end
-	end--]]
-
+	end
+-- exhaustion test
+-----------------------------------------------------------------------------------------------------------------
 	if self:getGroup():getAccess() then
 		if thing:isItem() then
 			description = string.format('%s\nItem ID: %d', description, thing.itemid)
@@ -183,20 +191,29 @@ function Player:onLookInBattleList(creature, distance)
 			description = string.format('%s\nIP: %s.', description, Game.convertIpToString(creature:getIp()))
 		end
 	end
+-----------------------------------------------------------------------------------------------------------------[[
+--[[ exhaustion test
+
+	if player:getExhaustion(321456) <= 0 then
+       		player:setExhaustion(321456, 1)
+	else
+        	return false
+	end]]
+
+	-- KD look 
+	if thing:isCreature() and thing:isPlayer() then
+        	description = string.format("%s\n [PVP Kills: %d] \n [PVP Deaths: %d] \n",
+            description, math.max(0, thing:getStorageValue(167912)), math.max(0, thing:getStorageValue(167913)))
+    	end
 	
-	
-	--[[KD look 
-	 if creature:isPlayer() and creature:isCreature() then
-        description = string.format("%s\n [PVP Kills: %d] \n [PVP Deaths: %d] \n",
-            description, math.max(0, creature:getStorageValue(167912)), math.max(0, creature:getStorageValue(167913)))
-    end--]]
-	
-	--[[-- MARRY  
-	if LOOK_MARRIAGE_DESCR and creature:isCreature() then
-		if creature:isPlayer() then
-			description = description .. self:getMarriageDescription(creature)
+	-- MARRY 
+	if LOOK_MARRIAGE_DESCR and thing:isCreature() then
+		if thing:isPlayer() then
+			description = description .. self:getMarriageDescription(thing)
 		end
-	end--]]
+	end
+-- exhaustion test
+-----------------------------------------------------------------------------------------------------------------
 
 	self:sendTextMessage(MESSAGE_INFO_DESCR, description)
 end

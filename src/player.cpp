@@ -163,27 +163,28 @@ std::string Player::getDescription(int32_t lookDistance) const
 		}
 	}
 
-	if (guild && guildRank) {
-		if (lookDistance == -1) {
-			s << " You are ";
-		} else if (sex == PLAYERSEX_FEMALE) {
-			s << " She is ";
-		} else {
-			s << " He is ";
-		}
-
-		s << guildRank->name << " of the " << guild->getName();
-		if (!guildNick.empty()) {
-			s << " (" << guildNick << ')';
-		}
-
-		size_t memberCount = guild->getMemberCount();
-		if (memberCount == 1) {
-			s << ", which has 1 member, " << guild->getMembersOnline().size() << " of them online.";
-		} else {
-			s << ", which has " << memberCount << " members, " << guild->getMembersOnline().size() << " of them online.";
-		}
+	if (!guild || !guildRank) {
+		return s.str();
 	}
+			if (lookDistance == -1) {
+				s << " You are ";
+			} else if (sex == PLAYERSEX_FEMALE) {
+				s << " She is ";
+			} else {
+				s << " He is ";
+			}
+			s << guildRank->name << " of the " << guild->getName();
+			}
+			if (!guildNick.empty()) {
+				s << " (" << guildNick << ')';
+			}
+
+			size_t memberCount = guild->getMemberCount();
+			if (memberCount == 1) {
+				s << ", which has 1 member, " << guild->getMembersOnline().size() << " of them online.";
+			} else {
+				s << ", which has " << memberCount << " members, " << guild->getMembersOnline().size() << " of them online.";
+			}
 	return s.str();
 }
 

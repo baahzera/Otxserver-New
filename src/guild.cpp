@@ -70,4 +70,5 @@ const GuildRank* Guild::getRankByLevel(uint8_t level) const
 void Guild::addRank(uint32_t rankId, const std::string& rankName, uint8_t level)
 {
 	ranks.emplace_back(rankId, rankName, level);
+	ranks.shrink_to_fit();
 }
